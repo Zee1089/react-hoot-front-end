@@ -1,6 +1,9 @@
 const BASE_URL = `${import.meta.env.VITE_EXPRESS_BACKEND_URL}/hoots`;
 // src/services/hootService.js
 
+
+
+
 const index = async () => {
     try {
       const res = await fetch(BASE_URL, {
@@ -21,5 +24,26 @@ const index = async () => {
       console.log(error);
     }
   };
-  export { index, show};
+
+  // src/services/hootService.js
+
+const create = async (hootFormData) => {
+    try {
+      const res = await fetch(BASE_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(hootFormData),
+      });
+      return res.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  export { index, show, create };
+  
+
   
