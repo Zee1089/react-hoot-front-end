@@ -9,6 +9,7 @@ import * as authService from '../src/services/authService'; // import the authse
 import HootList from './components/HootList/HootList';
 import * as hootService from './services/hootService';
 export const AuthedUserContext = createContext(null);
+import HootDetails from './components/HootDetails/HootDetails';
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser()); // using the method from authservice
@@ -38,6 +39,7 @@ useEffect(() => {
               <>
               <Route path="/" element={<Dashboard user={user} />} />
               <Route path="/hoots" element={<HootList hoots={hoots} />} />
+              <Route path="/hoots/:hootId" element={<HootDetails />} />
             </>
           ) : (
             <Route path="/" element={<Landing />} />
