@@ -11,7 +11,7 @@ import * as hootService from './services/hootService';
 export const AuthedUserContext = createContext(null);
 import HootDetails from './components/HootDetails/HootDetails';
 import HootForm from './components/HootForm/HootForm';
-
+import { useParams } from 'react-router-dom';
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser()); // using the method from authservice
@@ -50,6 +50,14 @@ const handleDeleteHoot = async (hootId) => {
 };
 
 
+const handleUpdateHoot = async (hootId, hootFormData) => {
+  const updatedHoot = await hootService.update(hootId, hootFormData);
+
+  setHoots(hoots.map((hoot) => (hootId === hoot._id ? updatedHoot : hoot)));
+
+  navigate(`/hoots/${hootId}`);
+};
+
   return (
     <>
       <AuthedUserContext.Provider value={user}>
@@ -61,7 +69,7 @@ const handleDeleteHoot = async (hootId) => {
               <Route path="/hoots" element={<HootList hoots={hoots} />} />
               <Route path="/hoots/:hootId" element={<HootDetails handleDeleteHoot={handleDeleteHoot}  />} />
               <Route path="/hoots/new" element={<HootForm handleAddHoot={handleAddHoot} />} />
-
+              <Route path="/hoots/:hootId/edit" element={<HootForm handleUpdateHoot={handleUpdateHoot} />} />
             </>
           ) : (
             <Route path="/" element={<Landing />} />

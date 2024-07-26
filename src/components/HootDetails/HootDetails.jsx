@@ -5,6 +5,7 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import * as hootService from '../../services/hootService';
 import CommentForm from '../CommentForm/CommentForm';
+import { Link } from 'react-router-dom';
 
 const HootDetails = (props) => {
     const { hootId } = useParams();
@@ -38,7 +39,9 @@ return (
           {new Date(hoot.createdAt).toLocaleDateString()}
         </p>
         {hoot.author._id === user._id && (
+            
     <>
+    <Link to={`/hoots/${hootId}/edit`}>Edit</Link>
      <button onClick={() => props.handleDeleteHoot(hootId)}>Delete</button>
     </>
   )}
